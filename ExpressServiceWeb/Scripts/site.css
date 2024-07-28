@@ -1,0 +1,29 @@
+﻿header {
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+    header .navbar-brand img {
+        vertical-align: middle;
+    }
+
+    header .navbar-brand span {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #333;
+        vertical-align: middle;
+    }
+
+.container {
+    max-width: 960px;
+}
+
+.back-to-home-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+    .back-to-home-link:hover {
+        text-decoration: underline;
+    }

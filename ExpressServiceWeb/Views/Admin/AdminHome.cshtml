@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Trang chủ Admin";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Trang chủ Admin</h2>
+    <h3>Chào, @ViewBag.AdminName</h3>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Quản lý người dùng</h5>
+                    <p class="card-text text-secondary">Xem và quản lý thông tin người dùng.</p>
+                    <a href="@Url.Action("UserManagement", "Admin")" class="btn btn-primary">Xem danh sách người dùng</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Thống kê</h5>
+                    <p class="card-text text-secondary">Xem thống kê doanh thu và số đơn hàng.</p>
+                    <a href="@Url.Action("Statistics", "Admin")" class="btn btn-primary">Xem thống kê</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Chỉnh sửa thông tin cá nhân</h5>
+                    <p class="card-text text-secondary">Chỉnh sửa thông tin cá nhân của bạn.</p>
+                    <a href="@Url.Action("EditProfile", "Admin")" class="btn btn-primary">Chỉnh sửa thông tin cá nhân</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

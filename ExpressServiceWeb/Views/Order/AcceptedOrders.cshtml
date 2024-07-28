@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ExpressServiceWeb.Models.Order>
+
+@{
+    ViewBag.Title = "Danh sách đơn hàng đã nhận";
+    Layout = "~/Views/Shared/LayoutDriver.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Danh sách đơn hàng đã nhận</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Nội dung</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>Thời gian giao hàng</th>
+                <th>Địa chỉ nhận hàng</th>
+                <th>Thời gian nhận hàng</th>
+                <th>Thành tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.order_id</td>
+                    <td>@order.order_content</td>
+                    <td>@order.delivery_address</td>
+                    <td>@order.delivery_time</td>
+                    <td>@order.pickup_address</td>
+                    <td>@order.pickup_time</td>
+                    <td>@order.total_amount</td>
+                    <td>@order.status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-left mt-3">
+        <a href="@Url.Action("Index","DriverHome")" class="back-to-home-link">Trở về trang cá nhân</a>
+    </div>
+</div>

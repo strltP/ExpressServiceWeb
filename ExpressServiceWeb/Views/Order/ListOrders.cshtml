@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ExpressServiceWeb.Models.Order>
+
+@{
+    ViewBag.Title = "Danh sách đơn hàng khả dụng";
+    Layout = "~/Views/Shared/LayoutDriver.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Danh sách đơn hàng khả dụng</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mã đơn hàng</th>
+                <th>Nội dung</th>
+                <th>Địa chỉ giao hàng</th>
+                <th>Thời gian giao hàng</th>
+                <th>Địa chỉ nhận hàng</th>
+                <th>Thời gian nhận hàng</th>
+                <th>Thành tiền</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.order_id</td>
+                    <td>@order.order_content</td>
+                    <td>@order.delivery_address</td>
+                    <td>@order.delivery_time</td>
+                    <td>@order.pickup_address</td>
+                    <td>@order.pickup_time</td>
+                    <td>@order.total_amount</td>
+                    <td>
+                        @using (Html.BeginForm("AcceptOrder", "Order", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.Hidden("orderId", order.order_id)
+                            <button type="submit" class="btn btn-primary">Nhận đơn</button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="text-left mt-3">
+        <a href="@Url.Action("Index","DriverHome")" class="back-to-home-link">Trở về trang chủ</a>
+    </div>
+</div>

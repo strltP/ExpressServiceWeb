@@ -1,0 +1,920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ExpressServiceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CancellationReasons">
+          <Key>
+            <PropertyRef Name="reason_id" />
+          </Key>
+          <Property Name="reason_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="reason_text" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DiscountCodes">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="code" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="discount_percentage" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="expiration_date" Type="date" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Drivers">
+          <Key>
+            <PropertyRef Name="driver_id" />
+          </Key>
+          <Property Name="driver_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="vehicle_type_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="license_plate" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderHistory">
+          <Key>
+            <PropertyRef Name="history_id" />
+          </Key>
+          <Property Name="history_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="customer_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="customer_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="order_content" Type="text" Nullable="false" />
+          <Property Name="delivery_time" Type="datetime2" Precision="7" />
+          <Property Name="delivery_address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="pickup_time" Type="datetime2" Precision="7" />
+          <Property Name="pickup_address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="vehicle_type_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="discount_code" Type="varchar" MaxLength="50" />
+          <Property Name="distance" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total_amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="10" />
+          <Property Name="driver_id" Type="varchar" MaxLength="36" />
+          <Property Name="cancellation_reason_id" Type="varchar" MaxLength="36" />
+          <Property Name="cancellation_time" Type="datetime" />
+          <Property Name="created_at" Type="datetime" />
+          <Property Name="DeliveryLatitude" Type="float" />
+          <Property Name="DeliveryLongitude" Type="float" />
+          <Property Name="PickupLatitude" Type="float" />
+          <Property Name="PickupLongitude" Type="float" />
+          <Property Name="DiscountedAmount" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_method" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="payment_status" Type="varchar" MaxLength="10" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ratings">
+          <Key>
+            <PropertyRef Name="rating_id" />
+          </Key>
+          <Property Name="rating_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="customer_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="driver_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="rating" Type="tinyint" Nullable="false" />
+          <Property Name="comment" Type="text" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="revenue_id" />
+          </Key>
+          <Property Name="revenue_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="driver_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="order_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="full_name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="phone_number" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="role" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VehicleTypes">
+          <Key>
+            <PropertyRef Name="vehicle_type_id" />
+          </Key>
+          <Property Name="vehicle_type_id" Type="varchar" MaxLength="36" Nullable="false" />
+          <Property Name="vehicle_name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Drivers__driver___02FC7413">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Drivers">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Drivers__vehicle__03F0984C">
+          <End Role="VehicleTypes" Type="Self.VehicleTypes" Multiplicity="1" />
+          <End Role="Drivers" Type="Self.Drivers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleTypes">
+              <PropertyRef Name="vehicle_type_id" />
+            </Principal>
+            <Dependent Role="Drivers">
+              <PropertyRef Name="vehicle_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderHist__custo__75A278F5">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="OrderHistory">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderHist__order__76969D2E">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderHistory">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__cancella__59FA5E80">
+          <End Role="CancellationReasons" Type="Self.CancellationReasons" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CancellationReasons">
+              <PropertyRef Name="reason_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="cancellation_reason_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__customer__571DF1D5">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__driver_i__5812160E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__vehicle___59063A47">
+          <End Role="VehicleTypes" Type="Self.VehicleTypes" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleTypes">
+              <PropertyRef Name="vehicle_type_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="vehicle_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__order___5FB337D6">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__custome__656C112C">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__driver___66603565">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__order_i__6477ECF3">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Ratings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenue__driver___70DDC3D8">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Revenue" Type="Self.Revenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Revenue">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenue__order_i__71D1E811">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Revenue" Type="Self.Revenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Revenue">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpressServiceModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CancellationReasons" EntityType="Self.CancellationReasons" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DiscountCodes" EntityType="Self.DiscountCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Drivers" EntityType="Self.Drivers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderHistory" EntityType="Self.OrderHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ratings" EntityType="Self.Ratings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Revenue" EntityType="Self.Revenue" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehicleTypes" EntityType="Self.VehicleTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Drivers__driver___02FC7413" Association="Self.FK__Drivers__driver___02FC7413">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Drivers" EntitySet="Drivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Drivers__vehicle__03F0984C" Association="Self.FK__Drivers__vehicle__03F0984C">
+            <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+            <End Role="Drivers" EntitySet="Drivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderHist__custo__75A278F5" Association="Self.FK__OrderHist__custo__75A278F5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OrderHistory" EntitySet="OrderHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderHist__order__76969D2E" Association="Self.FK__OrderHist__order__76969D2E">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderHistory" EntitySet="OrderHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__cancella__59FA5E80" Association="Self.FK__Orders__cancella__59FA5E80">
+            <End Role="CancellationReasons" EntitySet="CancellationReasons" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__customer__571DF1D5" Association="Self.FK__Orders__customer__571DF1D5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__driver_i__5812160E" Association="Self.FK__Orders__driver_i__5812160E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__vehicle___59063A47" Association="Self.FK__Orders__vehicle___59063A47">
+            <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__order___5FB337D6" Association="Self.FK__Payments__order___5FB337D6">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__custome__656C112C" Association="Self.FK__Ratings__custome__656C112C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__driver___66603565" Association="Self.FK__Ratings__driver___66603565">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__order_i__6477ECF3" Association="Self.FK__Ratings__order_i__6477ECF3">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenue__driver___70DDC3D8" Association="Self.FK__Revenue__driver___70DDC3D8">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Revenue" EntitySet="Revenue" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenue__order_i__71D1E811" Association="Self.FK__Revenue__order_i__71D1E811">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Revenue" EntitySet="Revenue" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExpressServiceModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="admin_id" />
+          </Key>
+          <Property Name="admin_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="CancellationReason">
+          <Key>
+            <PropertyRef Name="reason_id" />
+          </Key>
+          <Property Name="reason_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="reason_text" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__cancella__59FA5E80" FromRole="CancellationReasons" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="DiscountCode">
+          <Key>
+            <PropertyRef Name="discount_id" />
+          </Key>
+          <Property Name="discount_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="discount_percentage" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="expiration_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="OrderHistory">
+          <Key>
+            <PropertyRef Name="history_id" />
+          </Key>
+          <Property Name="history_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__OrderHist__custo__75A278F5" FromRole="OrderHistory" ToRole="Users" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__OrderHist__order__76969D2E" FromRole="OrderHistory" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="order_id" />
+          </Key>
+          <Property Name="order_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_content" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="delivery_time" Type="DateTime" Precision="7" />
+          <Property Name="delivery_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pickup_time" Type="DateTime" Precision="7" />
+          <Property Name="pickup_address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vehicle_type_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="discount_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="distance" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total_amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="driver_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="cancellation_reason_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="cancellation_time" Type="DateTime" Precision="3" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryLatitude" Type="Double" />
+          <Property Name="DeliveryLongitude" Type="Double" />
+          <Property Name="PickupLatitude" Type="Double" />
+          <Property Name="PickupLongitude" Type="Double" />
+          <NavigationProperty Name="CancellationReason" Relationship="Self.FK__Orders__cancella__59FA5E80" FromRole="Orders" ToRole="CancellationReasons" />
+          <NavigationProperty Name="OrderHistories" Relationship="Self.FK__OrderHist__order__76969D2E" FromRole="Orders" ToRole="OrderHistory" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Orders__customer__571DF1D5" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Orders__driver_i__5812160E" FromRole="Orders" ToRole="Users" />
+          <NavigationProperty Name="VehicleType" Relationship="Self.FK__Orders__vehicle___59063A47" FromRole="Orders" ToRole="VehicleTypes" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payments__order___5FB337D6" FromRole="Orders" ToRole="Payments" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Ratings__order_i__6477ECF3" FromRole="Orders" ToRole="Ratings" />
+          <NavigationProperty Name="Revenues" Relationship="Self.FK__Revenue__order_i__71D1E811" FromRole="Orders" ToRole="Revenue" />
+          <Property Name="DiscountedAmount" Type="Decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="payment_id" />
+          </Key>
+          <Property Name="payment_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_method" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="payment_status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__Payments__order___5FB337D6" FromRole="Payments" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Rating">
+          <Key>
+            <PropertyRef Name="rating_id" />
+          </Key>
+          <Property Name="rating_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="driver_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rating1" Type="Byte" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__Ratings__order_i__6477ECF3" FromRole="Ratings" ToRole="Orders" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Ratings__custome__656C112C" FromRole="Ratings" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Ratings__driver___66603565" FromRole="Ratings" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Revenue">
+          <Key>
+            <PropertyRef Name="revenue_id" />
+          </Key>
+          <Property Name="revenue_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="driver_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="order_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK__Revenue__order_i__71D1E811" FromRole="Revenue" ToRole="Orders" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Revenue__driver___70DDC3D8" FromRole="Revenue" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="full_name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone_number" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="role" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="OrderHistories" Relationship="Self.FK__OrderHist__custo__75A278F5" FromRole="Users" ToRole="OrderHistory" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__customer__571DF1D5" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Orders1" Relationship="Self.FK__Orders__driver_i__5812160E" FromRole="Users" ToRole="Orders" />
+          <NavigationProperty Name="Ratings" Relationship="Self.FK__Ratings__custome__656C112C" FromRole="Users" ToRole="Ratings" />
+          <NavigationProperty Name="Ratings1" Relationship="Self.FK__Ratings__driver___66603565" FromRole="Users" ToRole="Ratings" />
+          <NavigationProperty Name="Revenues" Relationship="Self.FK__Revenue__driver___70DDC3D8" FromRole="Users" ToRole="Revenue" />
+          <NavigationProperty Name="Driver" Relationship="ExpressServiceModel.FK__Drivers__driver___02FC7413" FromRole="User" ToRole="Driver" />
+        </EntityType>
+        <EntityType Name="VehicleType">
+          <Key>
+            <PropertyRef Name="vehicle_type_id" />
+          </Key>
+          <Property Name="vehicle_type_id" Type="String" MaxLength="36" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="vehicle_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK__Orders__vehicle___59063A47" FromRole="VehicleTypes" ToRole="Orders" />
+          <NavigationProperty Name="Drivers" Relationship="ExpressServiceModel.FK__Drivers__vehicle__03F0984C" FromRole="VehicleType" ToRole="Driver" />
+        </EntityType>
+        <Association Name="FK__Orders__cancella__59FA5E80">
+          <End Role="CancellationReasons" Type="Self.CancellationReason" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CancellationReasons">
+              <PropertyRef Name="reason_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="cancellation_reason_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderHist__custo__75A278F5">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="OrderHistory">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderHist__order__76969D2E">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderHistory" Type="Self.OrderHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="OrderHistory">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__customer__571DF1D5">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__driver_i__5812160E">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Orders__vehicle___59063A47">
+          <End Role="VehicleTypes" Type="Self.VehicleType" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleTypes">
+              <PropertyRef Name="vehicle_type_id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="vehicle_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payments__order___5FB337D6">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Payments" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__order_i__6477ECF3">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenue__order_i__71D1E811">
+          <End Role="Orders" Type="Self.Order" Multiplicity="1" />
+          <End Role="Revenue" Type="Self.Revenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="order_id" />
+            </Principal>
+            <Dependent Role="Revenue">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__custome__656C112C">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ratings__driver___66603565">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Ratings" Type="Self.Rating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Ratings">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Revenue__driver___70DDC3D8">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Revenue" Type="Self.Revenue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Revenue">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExpressServiceEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="CancellationReasons" EntityType="Self.CancellationReason" />
+          <EntitySet Name="DiscountCodes" EntityType="Self.DiscountCode" />
+          <EntitySet Name="OrderHistories" EntityType="Self.OrderHistory" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Ratings" EntityType="Self.Rating" />
+          <EntitySet Name="Revenues" EntityType="Self.Revenue" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="VehicleTypes" EntityType="Self.VehicleType" />
+          <AssociationSet Name="FK__Orders__cancella__59FA5E80" Association="Self.FK__Orders__cancella__59FA5E80">
+            <End Role="CancellationReasons" EntitySet="CancellationReasons" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderHist__custo__75A278F5" Association="Self.FK__OrderHist__custo__75A278F5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="OrderHistory" EntitySet="OrderHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderHist__order__76969D2E" Association="Self.FK__OrderHist__order__76969D2E">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderHistory" EntitySet="OrderHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__customer__571DF1D5" Association="Self.FK__Orders__customer__571DF1D5">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__driver_i__5812160E" Association="Self.FK__Orders__driver_i__5812160E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Orders__vehicle___59063A47" Association="Self.FK__Orders__vehicle___59063A47">
+            <End Role="VehicleTypes" EntitySet="VehicleTypes" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payments__order___5FB337D6" Association="Self.FK__Payments__order___5FB337D6">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__order_i__6477ECF3" Association="Self.FK__Ratings__order_i__6477ECF3">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenue__order_i__71D1E811" Association="Self.FK__Revenue__order_i__71D1E811">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Revenue" EntitySet="Revenues" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__custome__656C112C" Association="Self.FK__Ratings__custome__656C112C">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ratings__driver___66603565" Association="Self.FK__Ratings__driver___66603565">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Revenue__driver___70DDC3D8" Association="Self.FK__Revenue__driver___70DDC3D8">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Revenue" EntitySet="Revenues" />
+          </AssociationSet>
+          <EntitySet Name="Drivers" EntityType="ExpressServiceModel.Driver" />
+          <AssociationSet Name="FK__Drivers__driver___02FC7413" Association="ExpressServiceModel.FK__Drivers__driver___02FC7413">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Driver" EntitySet="Drivers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Drivers__vehicle__03F0984C" Association="ExpressServiceModel.FK__Drivers__vehicle__03F0984C">
+            <End Role="VehicleType" EntitySet="VehicleTypes" />
+            <End Role="Driver" EntitySet="Drivers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Driver">
+          <Key>
+            <PropertyRef Name="driver_id" />
+          </Key>
+          <Property Name="driver_id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="vehicle_type_id" Type="String" Nullable="false" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="license_plate" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="ExpressServiceModel.FK__Drivers__driver___02FC7413" FromRole="Driver" ToRole="User" />
+          <NavigationProperty Name="VehicleType" Relationship="ExpressServiceModel.FK__Drivers__vehicle__03F0984C" FromRole="Driver" ToRole="VehicleType" />
+        </EntityType>
+        <Association Name="FK__Drivers__driver___02FC7413">
+          <End Type="ExpressServiceModel.User" Role="User" Multiplicity="1" />
+          <End Type="ExpressServiceModel.Driver" Role="Driver" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="Driver">
+              <PropertyRef Name="driver_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Drivers__vehicle__03F0984C">
+          <End Type="ExpressServiceModel.VehicleType" Role="VehicleType" Multiplicity="1" />
+          <End Type="ExpressServiceModel.Driver" Role="Driver" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehicleType">
+              <PropertyRef Name="vehicle_type_id" />
+            </Principal>
+            <Dependent Role="Driver">
+              <PropertyRef Name="vehicle_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExpressServiceModelStoreContainer" CdmEntityContainer="ExpressServiceEntities">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CancellationReasons">
+            <EntityTypeMapping TypeName="ExpressServiceModel.CancellationReason">
+              <MappingFragment StoreEntitySet="CancellationReasons">
+                <ScalarProperty Name="reason_id" ColumnName="reason_id" />
+                <ScalarProperty Name="reason_text" ColumnName="reason_text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DiscountCodes">
+            <EntityTypeMapping TypeName="ExpressServiceModel.DiscountCode">
+              <MappingFragment StoreEntitySet="DiscountCodes">
+                <ScalarProperty Name="discount_id" ColumnName="discount_id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="discount_percentage" ColumnName="discount_percentage" />
+                <ScalarProperty Name="expiration_date" ColumnName="expiration_date" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderHistories">
+            <EntityTypeMapping TypeName="ExpressServiceModel.OrderHistory">
+              <MappingFragment StoreEntitySet="OrderHistory">
+                <ScalarProperty Name="history_id" ColumnName="history_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="DiscountedAmount" ColumnName="DiscountedAmount" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="order_content" ColumnName="order_content" />
+                <ScalarProperty Name="delivery_time" ColumnName="delivery_time" />
+                <ScalarProperty Name="delivery_address" ColumnName="delivery_address" />
+                <ScalarProperty Name="pickup_time" ColumnName="pickup_time" />
+                <ScalarProperty Name="pickup_address" ColumnName="pickup_address" />
+                <ScalarProperty Name="vehicle_type_id" ColumnName="vehicle_type_id" />
+                <ScalarProperty Name="discount_code" ColumnName="discount_code" />
+                <ScalarProperty Name="distance" ColumnName="distance" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="cancellation_reason_id" ColumnName="cancellation_reason_id" />
+                <ScalarProperty Name="cancellation_time" ColumnName="cancellation_time" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="DeliveryLatitude" ColumnName="DeliveryLatitude" />
+                <ScalarProperty Name="DeliveryLongitude" ColumnName="DeliveryLongitude" />
+                <ScalarProperty Name="PickupLatitude" ColumnName="PickupLatitude" />
+                <ScalarProperty Name="PickupLongitude" ColumnName="PickupLongitude" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Payment">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="payment_id" ColumnName="payment_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_method" ColumnName="payment_method" />
+                <ScalarProperty Name="payment_status" ColumnName="payment_status" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ratings">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Rating">
+              <MappingFragment StoreEntitySet="Ratings">
+                <ScalarProperty Name="rating_id" ColumnName="rating_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="rating1" ColumnName="rating" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Revenues">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Revenue">
+              <MappingFragment StoreEntitySet="Revenue">
+                <ScalarProperty Name="revenue_id" ColumnName="revenue_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="order_id" ColumnName="order_id" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="ExpressServiceModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="full_name" ColumnName="full_name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehicleTypes">
+            <EntityTypeMapping TypeName="ExpressServiceModel.VehicleType">
+              <MappingFragment StoreEntitySet="VehicleTypes">
+                <ScalarProperty Name="vehicle_type_id" ColumnName="vehicle_type_id" />
+                <ScalarProperty Name="vehicle_name" ColumnName="vehicle_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Drivers">
+            <EntityTypeMapping TypeName="ExpressServiceModel.Driver">
+              <MappingFragment StoreEntitySet="Drivers">
+                <ScalarProperty Name="license_plate" ColumnName="license_plate" />
+                <ScalarProperty Name="vehicle_type_id" ColumnName="vehicle_type_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

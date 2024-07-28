@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5bacaa9f46b14849967bde9f41234045" Name="Diagram1" ZoomLevel="59">
+        <EntityTypeShape EntityType="ExpressServiceModel.Admin" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.CancellationReason" Width="1.5" PointX="3.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.DiscountCode" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.OrderHistory" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.Order" Width="1.5" PointX="6" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.Payment" Width="1.5" PointX="8.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.Rating" Width="1.5" PointX="11.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.Revenue" Width="1.5" PointX="8.25" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.User" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExpressServiceModel.VehicleType" Width="1.5" PointX="3.75" PointY="9.875" IsExpanded="true" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Orders__cancella__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__OrderHist__custo__75A278F5" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__OrderHist__order__76969D2E" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Orders__customer__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Orders__driver_i__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Orders__vehicle___59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Payments__order___5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Ratings__order_i__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Revenue__order_i__71D1E811" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Ratings__custome__656C112C" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Ratings__driver___66603565" ManuallyRouted="false" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Revenue__driver___70DDC3D8" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ExpressServiceModel.Driver" Width="1.5" PointX="9" PointY="9.75" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Drivers__driver___02FC7413" />
+        <AssociationConnector Association="ExpressServiceModel.FK__Drivers__vehicle__03F0984C" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

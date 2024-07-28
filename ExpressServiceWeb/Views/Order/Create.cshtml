@@ -1,0 +1,266 @@
+﻿@model ExpressServiceWeb.OrderViewModel
+
+@{
+    ViewBag.Title = "Tạo đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var currentTime = DateTime.Now;
+    var pickupTime = currentTime.AddMinutes(30);
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Tạo đơn hàng</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card p-4 shadow-sm">
+            <h4 class="card-title">Thông tin đơn hàng</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.OrderContent, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.TextAreaFor(m => m.OrderContent, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.OrderContent, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.DeliveryTime, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.DeliveryTime, new { htmlAttributes = new { @readonly = "readonly", @class = "form-control", @Value = currentTime.ToString("yyyy-MM-ddTHH:mm") } })
+                    @Html.ValidationMessageFor(m => m.DeliveryTime, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.DeliveryAddress, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.DeliveryAddress, new { htmlAttributes = new { @class = "form-control", id = "deliveryAddress" } })
+                    @Html.ValidationMessageFor(m => m.DeliveryAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.PickupAddress, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.PickupAddress, new { htmlAttributes = new { @class = "form-control", id = "pickupAddress" } })
+                    @Html.ValidationMessageFor(m => m.PickupAddress, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-3 col-form-label">Chọn loại địa chỉ</div>
+                <div class="col-sm-9">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="addressType" id="delivery" value="delivery" checked>
+                        <label class="form-check-label" for="delivery">Địa chỉ giao hàng</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="addressType" id="pickup" value="pickup">
+                        <label class="form-check-label" for="pickup">Địa chỉ nhận hàng</label>
+                    </div>
+                </div>
+            </div>
+
+            <div id="map" style="height: 300px; margin-bottom: 20px;"></div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Khoảng cách:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="distance" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Thành tiền:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="totalAmount" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.VehicleTypeId, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(m => m.VehicleTypeId, ViewBag.VehicleTypeId as SelectList, "Chọn loại phương tiện", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.VehicleTypeId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                @Html.LabelFor(m => m.DiscountCode, htmlAttributes: new { @class = "col-sm-3 col-form-label" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(m => m.DiscountCode, new { htmlAttributes = new { @class = "form-control", id = "discountCode" } })
+                    @Html.ValidationMessageFor(m => m.DiscountCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Giá sau giảm giá:</label>
+                <div class="col-sm-9">
+                    <input type="text" id="discountedAmount" class="form-control" readonly />
+                </div>
+            </div>
+
+            <!-- Hidden fields for latitude, longitude, pickup time, distance, total amount, and discounted amount -->
+            @Html.HiddenFor(m => m.PickupTime, new { @Value = pickupTime.ToString("yyyy-MM-ddTHH:mm") })
+            @Html.HiddenFor(m => m.DeliveryLatitude)
+            @Html.HiddenFor(m => m.DeliveryLongitude)
+            @Html.HiddenFor(m => m.PickupLatitude)
+            @Html.HiddenFor(m => m.PickupLongitude)
+            @Html.HiddenFor(m => m.Distance, new { id = "Distance" })
+            @Html.HiddenFor(m => m.TotalAmount, new { id = "TotalAmount" })
+            @Html.HiddenFor(m => m.DiscountedAmount, new { id = "DiscountedAmount" })
+
+            <div class="form-group row">
+                <div class="col-sm-9 offset-sm-3">
+                    <input type="submit" value="Tạo đơn hàng" class="btn btn-primary btn-block" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var map = L.map('map').setView([10.762622, 106.660172], 13); // Sài Gòn location
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            var deliveryMarker = L.marker([10.762622, 106.660172], { draggable: true }).addTo(map);
+            var pickupMarker = L.marker([10.762622, 106.660172], { draggable: true }).addTo(map);
+
+            $('input[name="addressType"]').change(function() {
+                var selectedType = $('input[name="addressType"]:checked').val();
+                if (selectedType === 'delivery') {
+                    map.setView(deliveryMarker.getLatLng(), 13);
+                    deliveryMarker.addTo(map);
+                    map.removeLayer(pickupMarker);
+                } else {
+                    map.setView(pickupMarker.getLatLng(), 13);
+                    pickupMarker.addTo(map);
+                    map.removeLayer(deliveryMarker);
+                }
+            });
+
+            map.on('click', function(e) {
+                var selectedType = $('input[name="addressType"]:checked').val();
+                if (selectedType === 'delivery') {
+                    placeMarker(deliveryMarker, e.latlng, 'DeliveryLatitude', 'DeliveryLongitude', 'deliveryAddress');
+                } else {
+                    placeMarker(pickupMarker, e.latlng, 'PickupLatitude', 'PickupLongitude', 'pickupAddress');
+                }
+                calculateDistance();
+            });
+
+            deliveryMarker.on('dragend', function(e) {
+                updateLocation(deliveryMarker, 'DeliveryLatitude', 'DeliveryLongitude', 'deliveryAddress');
+                calculateDistance();
+            });
+
+            pickupMarker.on('dragend', function(e) {
+                updateLocation(pickupMarker, 'PickupLatitude', 'PickupLongitude', 'pickupAddress');
+                calculateDistance();
+            });
+
+            function placeMarker(marker, location, latField, lngField, addressField) {
+                marker.setLatLng(location);
+                document.getElementById(latField).value = location.lat;
+                document.getElementById(lngField).value = location.lng;
+
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.address) {
+                            document.getElementById(addressField).value = data.display_name;
+                        }
+                    });
+            }
+
+            function updateLocation(marker, latField, lngField, addressField) {
+                var location = marker.getLatLng();
+                document.getElementById(latField).value = location.lat;
+                document.getElementById(lngField).value = location.lng;
+
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data && data.address) {
+                            document.getElementById(addressField).value = data.display_name;
+                        }
+                    });
+            }
+
+            function calculateDistance() {
+                var deliveryLat = parseFloat(document.getElementById('DeliveryLatitude').value);
+                var deliveryLng = parseFloat(document.getElementById('DeliveryLongitude').value);
+                var pickupLat = parseFloat(document.getElementById('PickupLatitude').value);
+                var pickupLng = parseFloat(document.getElementById('PickupLongitude').value);
+
+                if (!isNaN(deliveryLat) && !isNaN(deliveryLng) && !isNaN(pickupLat) && !isNaN(pickupLng)) {
+                    var distance = getDistanceFromLatLonInKm(deliveryLat, deliveryLng, pickupLat, pickupLng);
+                    document.getElementById('distance').value = distance.toFixed(2) + " km";
+                    document.getElementById('Distance').value = distance;
+
+                    var totalAmount = distance * 15000;
+                    document.getElementById('totalAmount').value = totalAmount.toFixed(2) + " VND";
+                    document.getElementById('TotalAmount').value = totalAmount;
+
+                    applyDiscountCode();
+                }
+            }
+
+            function applyDiscountCode() {
+                var discountCode = document.getElementById('discountCode').value;
+                var totalAmount = parseFloat(document.getElementById('TotalAmount').value);
+                if (discountCode) {
+                    $.ajax({
+                        url: '@Url.Action("ApplyDiscount", "Order")',
+                        type: 'POST',
+                        data: { discountCode: discountCode, totalAmount: totalAmount },
+                        success: function(response) {
+                            if (response.success) {
+                                document.getElementById('discountedAmount').value = response.discountedAmount.toFixed(2) + " VND";
+                                document.getElementById('DiscountedAmount').value = response.discountedAmount;
+                            } else {
+                                alert(response.message);
+                                document.getElementById('discountedAmount').value = totalAmount.toFixed(2) + " VND";
+                                document.getElementById('DiscountedAmount').value = totalAmount;
+                            }
+                        }
+                    });
+                } else {
+                    document.getElementById('discountedAmount').value = totalAmount.toFixed(2) + " VND";
+                    document.getElementById('DiscountedAmount').value = totalAmount;
+                }
+            }
+
+            $('#discountCode').on('change', function() {
+                applyDiscountCode();
+            });
+
+            function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+                var R = 6371; // Radius of the earth in km
+                var dLat = deg2rad(lat2 - lat1); // deg2rad below
+                var dLon = deg2rad(lon1 - lon2);
+                var a =
+                    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+                    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                var distance = R * c; // Distance in km
+                return distance;
+            }
+
+            function deg2rad(deg) {
+                return deg * (Math.PI / 180);
+            }
+        });
+    </script>
+}

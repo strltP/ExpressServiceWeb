@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Trang chủ khách hàng";
+    Layout = "~/Views/Shared/_LayoutCustomer.cshtml";
+}
+
+<div class="container mt-5">
+    <h2 class="text-center text-primary mb-4">Trang chủ khách hàng</h2>
+
+    <div class="text-center mb-4">
+        @*<img src="@Url.Content($"~/Content/avatars/{ViewBag.Avatar}")" alt="Avatar" style="height: 100px; width: 100px; border-radius: 50%;">*@
+        <h3 class="mt-2">@ViewBag.UserName</h3>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Đặt hàng</h5>
+                    <p class="card-text text-secondary">Tạo đơn hàng mới để giao hàng.</p>
+                    <a href="@Url.Action("Order", "CustomerHome")" class="btn btn-primary">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Trang cá nhân</h5>
+                    <p class="card-text text-secondary">Xem và chỉnh sửa thông tin cá nhân của bạn.</p>
+                    <a href="@Url.Action("Profile", "CustomerHome")" class="btn btn-primary">Xem trang cá nhân</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center" style="background-color: #e3f2fd;">
+                    <h5 class="card-title text-primary">Lịch sử đặt hàng</h5>
+                    <p class="card-text text-secondary">Xem lại các đơn hàng bạn đã đặt.</p>
+                    <a href="@Url.Action("History", "Order")" class="btn btn-primary">Xem lịch sử đặt hàng</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
